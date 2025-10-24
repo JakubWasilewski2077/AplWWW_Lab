@@ -1,7 +1,7 @@
-"Category.objects.all()
+Category.objects.all()
 Category.objects.get(id=3)
 Category.objects.filter(name__startswith='F')
 Topic.objects.values_list('category__name').distinct()
 Post.objects.order_by('-title').values_list('title')
 category_new = Category(name = 'Nowa_Kategoria1', description = 'nowa_kategoria_lab3')
-category_new.save()"
+category_new.save()

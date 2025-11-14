@@ -16,7 +16,7 @@ urlpatterns = [
     path('topics/<int:pk>/', api_views.topic_detail),
 
     # post
-    path('posts/', api_views.post_list),
-    path('posts/create/', api_views.post_create),
-    path('posts/<int:pk>/', api_views.post_detail),
+    path('posts/', api_views.PostList.as_view()),
+    path('posts/create/', api_views.PostCreate.as_view()),
+    path('posts/<int:pk>/', api_views.PostDetail.as_view()),
 ]

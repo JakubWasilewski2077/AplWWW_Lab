@@ -11,6 +11,8 @@ urlpatterns = [
 
     path('categories/<int:pk>/topics/', api_views.categories_topics),
 
+    path('categories/info/<int:pk>/', api_views.category_view_details),
+
 
     # topic
     path('topics/', api_views.topic_list),

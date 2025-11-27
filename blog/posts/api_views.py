@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from .models import Category, Topic, Post
 from .serializers import CategorySerializer, TopicSerializer, PostSerializer
 from rest_framework.authentication import TokenAuthentication
+from django.contrib.auth.decorators import permission_required
+from django.http import HttpResponse
 
 # category --------------------------------------------------------------------------------------------
 
@@ -73,6 +75,16 @@ def categories_topics(request, pk):
     topics = Topic.objects.filter(category__id = pk)
     serializer = TopicSerializer(topics, many=True)
     return Response(serializer.data)
+
+
+
+@permission_required('posts.view_category')
+def category_view_details(request, pk):
+    try:
+        category = Category.objects.get(pk=pk)
+        return HttpResponse(f"Kategoria: {category.name}<br>Opis: {category.description}")
+    except Category.DoesNotExist:
+        return HttpResponse(f"Kategoria nie istnieje.")
 
 # topic --------------------------------------------------------------------------------------------
 
@@ -167,6 +179,10 @@ def post_update(request, pk):
         post = Post.objects.get(pk=pk)
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.user != post.created_by and not request.user.has_perm("posts.can_edit_others_posts"):
+        return Response({"error": "Ty możesz edytować tylko swoje posty"},
+                        status=status.HTTP_403_FORBIDDEN)
 
     if request.method == 'PUT':
         serializer = PostSerializer(post, data=request.data)

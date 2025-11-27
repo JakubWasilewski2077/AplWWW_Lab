@@ -35,6 +35,7 @@ class Post(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
+        permissions = [("can_edit_others_posts", "Pozwala edytowac posty innych osob.")]
         ordering = ['-created_at']
 
     def __str__(self):

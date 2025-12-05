@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rest_framework',
     'rest_framework.authtoken',
+    "graphene_django",
     'posts',
 ]
 
@@ -137,4 +138,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ]
+}
+
+GRAPHENE = {
+    "SCHEMA": "blog.schema.schema"
 }
